@@ -54,14 +54,34 @@ export default function AdminDashboard() {
       { id: '1', name: 'Paneer Butter Masala', category: 'Dinner' },
       { id: '2', name: 'Dal Roti', category: 'Lunch' },
       { id: '3', name: 'Aloo Paratha', category: 'Breakfast' },
+      { id: '4', name: 'Veg Biryani', category: 'Dinner' },
+      { id: '5', name: 'Chole Bhature', category: 'Snacks' },
+      { id: '6', name: 'Rajma Chawal', category: 'Lunch' },
+      { id: '7', name: 'Upma', category: 'Breakfast' },
+      { id: '8', name: 'Samosa', category: 'Snacks' },
+      { id: '9', name: 'Lauki Ki Sabzi', category: 'Dinner' }, // Intentional low performer
     ];
-    const mocFeedback = [
-      { id: 'a', menuItemId: '1', portion: 'full', rating: 5, comment: 'Great' },
-      { id: 'b', menuItemId: '1', portion: 'half', rating: 4, comment: 'Good' },
-      { id: 'c', menuItemId: '2', portion: 'skipped', rating: 2, comment: 'Boring' },
-      { id: 'd', menuItemId: '2', portion: 'half', rating: 3, comment: 'Okay' },
-      { id: 'e', menuItemId: '3', portion: 'full', rating: 5, comment: 'Loved it' },
-    ];
+
+    // Generating ~40 random feedbacks to make charts look great
+    const mocFeedback = [];
+    
+    // Low performer mock (Lauki Ki Sabzi)
+    for(let i=0; i<8; i++) mocFeedback.push({ id: `fb_l${i}`, menuItemId: '9', portion: i < 6 ? 'skipped' : 'half', rating: 1, comment: 'Did not like it' });
+    
+    // High performer mock (Paneer & Chole)
+    for(let i=0; i<10; i++) mocFeedback.push({ id: `fb_p${i}`, menuItemId: '1', portion: 'full', rating: i>2?5:4, comment: 'Excellent' });
+    for(let i=0; i<8; i++) mocFeedback.push({ id: `fb_c${i}`, menuItemId: '5', portion: 'full', rating: 5, comment: 'Awesome' });
+    
+    // Average items (Rajma, Dal, Biryani)
+    for(let i=0; i<7; i++) mocFeedback.push({ id: `fb_r${i}`, menuItemId: '6', portion: i%2===0?'full':'half', rating: 4, comment: 'Good' });
+    for(let i=0; i<6; i++) mocFeedback.push({ id: `fb_d${i}`, menuItemId: '2', portion: i===0?'skipped':'full', rating: 3, comment: 'Okay' });
+    for(let i=0; i<5; i++) mocFeedback.push({ id: `fb_b${i}`, menuItemId: '4', portion: 'half', rating: 4, comment: 'Too spicy' });
+    
+    // Others
+    for(let i=0; i<4; i++) mocFeedback.push({ id: `fb_u${i}`, menuItemId: '7', portion: 'skipped', rating: 2, comment: 'Too dry' });
+    for(let i=0; i<5; i++) mocFeedback.push({ id: `fb_s${i}`, menuItemId: '8', portion: 'full', rating: 5, comment: 'Crispy' });
+    for(let i=0; i<6; i++) mocFeedback.push({ id: `fb_a${i}`, menuItemId: '3', portion: i<2?'half':'full', rating: 4, comment: 'Tasty' });
+
     setMenuItems(mocMenu);
     setFeedback(mocFeedback);
   }, []);
