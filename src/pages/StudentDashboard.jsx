@@ -162,6 +162,18 @@ const StudentDashboard = () => {
 
   // CONCEPT: useCallback (Prevent unnecessary re-renders of child components)
   const handleFeedbackSubmit = useCallback(async (menuItemId, feedbackData) => {
+    // If we are in mock mode, bypass actual Firebase calls because Firebase queues writes 
+    // indefinitely when offline/invalid, which causes the 'await' to hang forever.
+    if (currentUser.uid && currentUser.uid.includes('mock')) {
+      alert("Feedback submitted successfully in Mock Mode!");
+      setSubmittedItems(prev => {
+        const newSet = new Set(prev);
+        newSet.add(menuItemId);
+        return newSet;
+      });
+      return;
+    }
+
     try {
       await addDoc(collection(db, 'feedback'), {
         menuItemId,
