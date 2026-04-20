@@ -25,6 +25,13 @@ export default function AdminDashboard() {
   // Fetch menu and feedback
   useEffect(() => {
     const fetchAdminData = async () => {
+      // Bypass Firestore queue entirely if using mock auth
+      if (currentUser?.uid && currentUser.uid.includes('mock')) {
+        setupMockData();
+        setLoading(false);
+        return;
+      }
+
       try {
         const menuSnap = await getDocs(query(collection(db, 'menu')));
         const menuData = menuSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
