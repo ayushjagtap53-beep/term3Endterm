@@ -6,7 +6,7 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend
 } from 'recharts';
-import { LogOut, Trash2, PlusCircle, TrendingUp, AlertTriangle, Lightbulb, Settings } from 'lucide-react';
+import { LogOut, Trash2, PlusCircle, TrendingUp, AlertTriangle, Lightbulb, Settings, Star } from 'lucide-react';
 
 // Wastage logic calculation:
 // Full -> 0% waste
