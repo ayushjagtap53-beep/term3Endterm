@@ -58,10 +58,16 @@ export function AuthProvider({ children }) {
     }
   };
 
-  const logout = () => {
+  const logout = async () => {
     try {
-      return signOut(auth);
+      if (currentUser?.uid?.includes('mock')) {
+        setCurrentUser(null);
+        setUserRole(null);
+        return;
+      }
+      await signOut(auth);
     } catch (error) {
+      console.error("Logout error", error);
       setCurrentUser(null);
       setUserRole(null);
     }
