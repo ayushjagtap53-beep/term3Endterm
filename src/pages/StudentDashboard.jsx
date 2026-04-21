@@ -124,12 +124,17 @@ const StudentDashboard = () => {
       try {
         // In a real app, query by today's date using where('date', '==', today)
         const menuQuery = query(collection(db, 'menu'));
-        const querySnapshot = await getDocs(menuQuery);
-        const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         
         // Also fetch user's feedback to disable already submitted ones
         const feedbackQuery = query(collection(db, 'feedback'), where('userId', '==', currentUser.uid));
-        const fbSnapshot = await getDocs(feedbackQuery);
+        
+        // Fetch queries in parallel to drastically improve load time
+        const [querySnapshot, fbSnapshot] = await Promise.all([
+          getDocs(menuQuery),
+          getDocs(feedbackQuery)
+        ]);
+        
+        const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         const submitted = new Set(fbSnapshot.docs.map(doc => doc.data().menuItemId));
         
         // Use Mock data if database is empty for demo purposes
